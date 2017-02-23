@@ -23,13 +23,15 @@
 
   <div>
     <label for="email">Email</label>
-    {{ input type="text" value=email id="email" class="form-control"
-             name="email" aria-describedby="emailHelpBlock" }}
-    <div class="alert alert-danger">
-      <div>
-        Email is required.
+    {{ input type="text" value=email.value id="email" class="form-control"
+             name="email" aria-describedby="emailHelpBlock" key-up=(action 'onEmailChange') }}
+    {{#if email.errors}}
+      <div class="alert alert-danger">
+        <div>
+          Provided email is invalid.
+        </div>
       </div>
-    </div>
+    {{/if}}
   </div>
 
   <div>
