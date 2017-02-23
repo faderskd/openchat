@@ -48,3 +48,12 @@ export function MinLength(minLength) {
     return value.length >= this.minLength;
   };
 }
+
+export function MatchPattern(pattern) {
+  this.validatorName = 'matchPattern';
+  this.pattern = pattern;
+
+  this.isValid = function(value) {
+    return value.match(this.pattern);
+  }
+}
