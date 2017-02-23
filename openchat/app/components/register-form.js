@@ -1,11 +1,11 @@
 import Ember from 'ember';
-import {TextInput, MaxLength} from '../utils/text-input';
+import {TextInput, MaxLength, MinLength} from '../utils/text-input';
 
 
 export default Ember.Component.extend({
   username: TextInput.create({
     value: '',
-    validators: [new MaxLength(30)]
+    validators: [new MaxLength(30), new MinLength(6)]
   }),
   email: '',
   password: '',
@@ -16,8 +16,7 @@ export default Ember.Component.extend({
 
   actions: {
     onUsernameChange() {
-      let usernameInput = this.get('username');
-      usernameInput.validate();
+      this.get('username').validate();
     }
   }
 

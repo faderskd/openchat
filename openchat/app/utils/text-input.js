@@ -3,7 +3,7 @@ import Ember from 'ember';
 export const TextInput = Ember.Object.extend({
   init() {
     this._super(...arguments);
-    this.set('errors', {});
+    this.set('errors', false);
   },
 
   validate() {
@@ -16,8 +16,10 @@ export const TextInput = Ember.Object.extend({
       let validator = validators[i];
 
       if (!validator.isValid(value)) {
-        errors[validator.validatorName] = validator;
+        errors[validator.validatorName] = true;
         hasErrors = true;
+      } else {
+        errors[validator.validatorName] = false;
       }
     }
 
@@ -26,7 +28,6 @@ export const TextInput = Ember.Object.extend({
     }
 
     this.set('errors', errors);
-    console.log(errors);
   }
 });
 
@@ -36,5 +37,14 @@ export function MaxLength(maxLength) {
 
   this.isValid = function(value) {
     return value.length <= this.maxLength;
+  };
+}
+
+export function MinLength(minLength) {
+  this.validatorName = 'minLength';
+  this.minLength = minLength;
+
+  this.isValid = function(value) {
+    return value.length >= this.minLength;
   };
 }

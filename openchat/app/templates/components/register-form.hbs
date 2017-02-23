@@ -5,11 +5,22 @@
              name="username" aria-describedby="usernameHelpBlock" key-up=(action 'onUsernameChange') }}
 
     {{#if username.errors}}
-      <div class="alert alert-danger">
-        <div>
-          Username is required.
+      {{#if username.errors.maxLength}}
+        <div class="alert alert-danger">
+          <div>
+            Username must contain max 30 characters.
+          </div>
         </div>
-      </div>
+      {{/if}}
+
+      {{#if username.errors.minLength}}
+        <div class="alert alert-danger">
+          <div>
+            Username must contain min 6 characters.
+          </div>
+        </div>
+      {{/if}}
+
     {{/if}}
 
   </div>
