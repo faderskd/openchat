@@ -1,19 +1,22 @@
 <form>
   <div>
     <label for="username">Username</label>
-    {{ input type="text" value=username id="username" class="form-control"
-             name="username" aria-describedby="usernameHelpBlock" }}
+    {{ input type="text" value=username.value id="username" class="form-control"
+             name="username" aria-describedby="usernameHelpBlock" key-up=(action 'onUsernameChange') }}
 
-    <div class="alert alert-danger">
-      <div>
-        Username is required.
+    {{#if username.errors}}
+      <div class="alert alert-danger">
+        <div>
+          Username is required.
+        </div>
       </div>
-    </div>
+    {{/if}}
+
   </div>
 
   <div>
     <label for="email">Email</label>
-    {{ input type="text" value=username id="email" class="form-control"
+    {{ input type="text" value=email id="email" class="form-control"
              name="email" aria-describedby="emailHelpBlock" }}
     <div class="alert alert-danger">
       <div>
@@ -24,7 +27,7 @@
 
   <div>
     <label for="password">Password</label>
-    {{ input type="password" value=username id="password" class="form-control"
+    {{ input type="password" value=password id="password" class="form-control"
              name="password" aria-describedby="passwordHelpBlock" }}
     <div class="alert alert-danger">
       <div>
@@ -35,7 +38,7 @@
 
   <div>
     <label for="confirmPassword">Confirm Password</label>
-    {{ input type="password" value=username id="confirmPassword" class="form-control"
+    {{ input type="password" value=confirmPassword id="confirmPassword" class="form-control"
              name="confirmPassword" aria-describedby="confirmPasswordHelpBlock" }}
     <div class="alert alert-danger">
       <div>
