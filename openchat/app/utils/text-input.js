@@ -57,3 +57,14 @@ export function MatchPattern(pattern) {
     return this.pattern.test(value);
   };
 }
+
+export function SameAs(otherInput) {
+  this.validatorName = 'sameAs';
+  this.otherInput = otherInput;
+
+  this.isValid = function (value) {
+    return this.otherInput.value === value;
+  }
+}
+
+
