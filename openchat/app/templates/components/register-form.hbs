@@ -1,7 +1,48 @@
 <form>
-  {{input type="text" value=username}}
-  {{input type="text" value=email}}
-  {{input type="password" value=password}}
-  {{input type="password" value=confirmPassword}}
-  <button type="submit">register</button>
+  <div>
+    <label for="username">Username</label>
+    {{ input type="text" value=username id="username" class="form-control"
+             name="username" aria-describedby="usernameHelpBlock" }}
+
+    <div class="alert alert-danger">
+      <div>
+        Username is required.
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label for="email">Email</label>
+    {{ input type="text" value=username id="email" class="form-control"
+             name="email" aria-describedby="emailHelpBlock" }}
+    <div class="alert alert-danger">
+      <div>
+        Email is required.
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label for="password">Password</label>
+    {{ input type="password" value=username id="password" class="form-control"
+             name="password" aria-describedby="passwordHelpBlock" }}
+    <div class="alert alert-danger">
+      <div>
+        password is required.
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label for="confirmPassword">Confirm Password</label>
+    {{ input type="password" value=username id="confirmPassword" class="form-control"
+             name="confirmPassword" aria-describedby="confirmPasswordHelpBlock" }}
+    <div class="alert alert-danger">
+      <div>
+        password is required.
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Register</button>
 </form>
