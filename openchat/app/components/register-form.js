@@ -11,7 +11,10 @@ export default Ember.Component.extend({
     value: '',
     validators: [new MatchPattern(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)]
   }),
-  password: '',
+  password: TextInput.create({
+    value: '',
+    validators: [new MaxLength(50), new MinLength(8)]
+  }),
   confirmPassword: '',
 
   usernameErrors: [],
@@ -24,6 +27,10 @@ export default Ember.Component.extend({
 
     onEmailChange() {
       this.get('email').validate();
+    },
+
+    onPasswordChange() {
+      this.get('password').validate();
     }
   }
 

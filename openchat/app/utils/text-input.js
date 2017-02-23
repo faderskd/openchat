@@ -54,8 +54,6 @@ export function MatchPattern(pattern) {
   this.pattern = pattern;
 
   this.isValid = function(value) {
-    let result = this.pattern.test(value);
-    console.log(result);
-    return result;
+    return this.pattern.test(value);
   };
 }

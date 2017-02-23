@@ -28,7 +28,7 @@
     {{#if email.errors}}
       <div class="alert alert-danger">
         <div>
-          Provided email is invalid.
+          Provide valid email address.
         </div>
       </div>
     {{/if}}
@@ -36,13 +36,23 @@
 
   <div>
     <label for="password">Password</label>
-    {{ input type="password" value=password id="password" class="form-control"
-             name="password" aria-describedby="passwordHelpBlock" }}
-    <div class="alert alert-danger">
-      <div>
-        password is required.
+    {{ input type="password" value=password.value id="password" class="form-control"
+             name="password" aria-describedby="passwordHelpBlock" key-up=(action 'onPasswordChange') }}
+    {{# if password.errors }}
+      <div class="alert alert-danger">
+        {{#if password.errors.maxLength}}
+          <div>
+            Password must contain max 50 characters.
+          </div>
+        {{/if}}
+        {{#if password.errors.minLength}}
+          <div>
+            Password must contain min 8 characters.
+          </div>
+        {{/if}}
       </div>
-    </div>
+    {{/if}}
+
   </div>
 
   <div>
