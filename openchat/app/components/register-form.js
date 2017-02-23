@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import {TextInput, MaxLength, MinLength, MatchPattern} from '../utils/text-input';
+import {TextInput, MaxLength, MinLength, MatchPattern, SameAs} from '../utils/text-input';
 
 
 export default Ember.Component.extend({
@@ -15,10 +15,20 @@ export default Ember.Component.extend({
     value: '',
     validators: [new MaxLength(50), new MinLength(8)]
   }),
-  confirmPassword: '',
+  confirmPassword: TextInput.create({
+    value: '',
+    validators: null
+  }),
 
-  usernameErrors: [],
-
+  init() {
+    this._super(...arguments);
+    let passwordInput = this.get('password');
+    let confirmPassword = this.get('confirmPassword');
+    confirmPassword.set(
+      'validators',
+      [new SameAs(passwordInput)]
+    );
+  },
 
   actions: {
     onUsernameChange() {
@@ -31,6 +41,10 @@ export default Ember.Component.extend({
 
     onPasswordChange() {
       this.get('password').validate();
+    },
+
+    onConfirmPasswordChange() {
+      this.get('confirmPassword').validate();
     }
   }
 

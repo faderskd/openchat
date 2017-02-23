@@ -57,13 +57,17 @@
 
   <div>
     <label for="confirmPassword">Confirm Password</label>
-    {{ input type="password" value=confirmPassword id="confirmPassword" class="form-control"
-             name="confirmPassword" aria-describedby="confirmPasswordHelpBlock" }}
-    <div class="alert alert-danger">
-      <div>
-        password is required.
+    {{ input type="password" value=confirmPassword.value id="confirmPassword" class="form-control"
+             name="confirmPassword" aria-describedby="confirmPasswordHelpBlock"
+             key-up=(action 'onConfirmPasswordChange')}}
+    {{#if confirmPassword.errors}}
+      <div class="alert alert-danger">
+        <div>
+          Password fields does not match
+        </div>
       </div>
-    </div>
+    {{/if}}
+
   </div>
 
   <button type="submit" class="btn btn-primary">Register</button>
