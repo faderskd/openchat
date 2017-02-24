@@ -20,7 +20,20 @@ export default Ember.Component.extend({
     validators: []
   }),
 
-  formInvalid: true,
+  init() {
+    this._super(...arguments);
+    let passwordInput = this.get('password');
+    let confirmPassword = this.get('confirmPassword');
+    confirmPassword.set(
+      'validators',
+      [new SameAs(passwordInput)]
+    );
+    confirmPassword.validate();
+  },
+
+  passwordChanged: Ember.observer('password.{value}', function () {
+    this.get('confirmPassword').validate();
+  }),
 
   showUsernameErrors: Ember.computed('username.{pristine,errors}', function () {
     return !this.get('username.pristine') && this.get('username.errors');
@@ -38,14 +51,10 @@ export default Ember.Component.extend({
     return !this.get('confirmPassword.pristine') && this.get('confirmPassword.errors');
   }),
 
-  init() {
-    this._super(...arguments);
-    let passwordInput = this.get('password');
-    let confirmPassword = this.get('confirmPassword');
-    confirmPassword.set(
-      'validators',
-      [new SameAs(passwordInput)]
-    );
-  },
+  formInvalid: Ember.computed('username.{errors}', 'email.{errors}', 'password.{errors}', 'confirmPassword.{errors}', function () {
+      return this.get('username.errors') || this.get('email.errors') || this.get('password.errors') || this.get('confirmPassword.errors');
+  }),
+
+
 
 });
