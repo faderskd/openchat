@@ -19,6 +19,7 @@ export default Ember.Component.extend({
     value: '',
     validators: []
   }),
+  submittedData: null,
 
   init() {
     this._super(...arguments);
@@ -54,6 +55,12 @@ export default Ember.Component.extend({
   formInvalid: Ember.computed('username.{errors}', 'email.{errors}', 'password.{errors}', 'confirmPassword.{errors}', function () {
       return this.get('username.errors') || this.get('email.errors') || this.get('password.errors') || this.get('confirmPassword.errors');
   }),
+
+  actions: {
+    onSubmit() {
+
+    }
+  }
 
 
 
