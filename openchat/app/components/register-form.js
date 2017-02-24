@@ -17,7 +17,13 @@ export default Ember.Component.extend({
   }),
   confirmPassword: TextInput.create({
     value: '',
-    validators: null
+    validators: []
+  }),
+
+  formInvalid: true,
+
+  showUsernameErrors: Ember.computed('username.{pristine,errors}', function () {
+    return !this.get('username.pristine') && this.get('username.errors');
   }),
 
   init() {
@@ -29,23 +35,5 @@ export default Ember.Component.extend({
       [new SameAs(passwordInput)]
     );
   },
-
-  actions: {
-    onUsernameChange() {
-      this.get('username').validate();
-    },
-
-    onEmailChange() {
-      this.get('email').validate();
-    },
-
-    onPasswordChange() {
-      this.get('password').validate();
-    },
-
-    onConfirmPasswordChange() {
-      this.get('confirmPassword').validate();
-    }
-  }
 
 });

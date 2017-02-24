@@ -1,10 +1,21 @@
 import Ember from 'ember';
 
 export const TextInput = Ember.Object.extend({
+  value: null,
+  errors: null,
+  validators: null,
+  pristine: null,
+
   init() {
     this._super(...arguments);
-    this.set('errors', false);
+    this.set('pristine', true);
+    this.validate();
   },
+
+  valueChanged: Ember.observer('value', function () {
+    this.validate();
+    this.set('pristine', false);
+  }),
 
   validate() {
     let validators = this.get('validators');

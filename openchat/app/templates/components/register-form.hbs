@@ -2,9 +2,9 @@
   <div>
     <label for="username">Username</label>
     {{ input type="text" value=username.value id="username" class="form-control"
-             name="username" aria-describedby="usernameHelpBlock" key-up=(action 'onUsernameChange') }}
+             name="username" aria-describedby="usernameHelpBlock" }}
 
-    {{#if username.errors}}
+    {{#if showUsernameErrors}}
       <div class="alert alert-danger">
         {{#if username.errors.maxLength}}
           <div>
@@ -24,7 +24,7 @@
   <div>
     <label for="email">Email</label>
     {{ input type="text" value=email.value id="email" class="form-control"
-             name="email" aria-describedby="emailHelpBlock" key-up=(action 'onEmailChange') }}
+             name="email" aria-describedby="emailHelpBlock" }}
     {{#if email.errors}}
       <div class="alert alert-danger">
         <div>
@@ -37,7 +37,7 @@
   <div>
     <label for="password">Password</label>
     {{ input type="password" value=password.value id="password" class="form-control"
-             name="password" aria-describedby="passwordHelpBlock" key-up=(action 'onPasswordChange') }}
+             name="password" aria-describedby="passwordHelpBlock" }}
     {{# if password.errors }}
       <div class="alert alert-danger">
         {{#if password.errors.maxLength}}
@@ -58,8 +58,7 @@
   <div>
     <label for="confirmPassword">Confirm Password</label>
     {{ input type="password" value=confirmPassword.value id="confirmPassword" class="form-control"
-             name="confirmPassword" aria-describedby="confirmPasswordHelpBlock"
-             key-up=(action 'onConfirmPasswordChange')}}
+             name="confirmPassword" aria-describedby="confirmPasswordHelpBlock"}}
     {{#if confirmPassword.errors}}
       <div class="alert alert-danger">
         <div>
@@ -70,5 +69,5 @@
 
   </div>
 
-  <button type="submit" class="btn btn-primary">Register</button>
+  <button type="submit" class="btn btn-primary" disabled={{formInvalid}}>Register</button>
 </form>
