@@ -26,6 +26,18 @@ export default Ember.Component.extend({
     return !this.get('username.pristine') && this.get('username.errors');
   }),
 
+  showEmailErrors: Ember.computed('email.{pristine,errors}', function () {
+    return !this.get('email.pristine') && this.get('email.errors');
+  }),
+
+  showPasswordErrors: Ember.computed('password.{pristine,errors}', function () {
+    return !this.get('password.pristine') && this.get('password.errors');
+  }),
+
+  showConfirmPasswordErrors: Ember.computed('confirmPassword.{pristine,errors}', function () {
+    return !this.get('confirmPassword.pristine') && this.get('confirmPassword.errors');
+  }),
+
   init() {
     this._super(...arguments);
     let passwordInput = this.get('password');
