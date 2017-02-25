@@ -7,19 +7,26 @@ export default Ember.Component.extend({
     value: '',
     validators: [new MaxLength(30), new MinLength(6)]
   }),
+
   email: TextInput.create({
     value: '',
     validators: [new MatchPattern(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)]
   }),
+
   password: TextInput.create({
     value: '',
     validators: [new MaxLength(50), new MinLength(8)]
   }),
+
   confirmPassword: TextInput.create({
     value: '',
     validators: []
   }),
+
   submittedData: null,
+  isUsernameUnique: false,
+
+  usernameUniquenessValidator: Ember.inject.service(),
 
   init() {
     this._super(...arguments);
@@ -58,7 +65,8 @@ export default Ember.Component.extend({
 
   actions: {
     onSubmit() {
-
+      let username = this.get('username').value;
+      this.get('usernameUniquenessValidator').validate(username, this, 'isUsernameUnique');
     }
   }
 

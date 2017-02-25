@@ -77,5 +77,3 @@ export function SameAs(otherInput) {
     return this.otherInput.value === value;
   }
 }
-
-
