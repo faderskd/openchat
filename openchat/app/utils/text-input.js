@@ -6,6 +6,12 @@ export const TextInput = Ember.Object.extend({
   validators: null,
   pristine: null,
 
+  asyncErrors: false,
+  asyncValidators: null,
+  asyncValidationPending: false,
+  asyncValidationDone: false,
+  asyncValidationFailed: false,
+
   init() {
     this._super(...arguments);
     this.set('pristine', true);
@@ -39,6 +45,32 @@ export const TextInput = Ember.Object.extend({
     }
 
     this.set('errors', errors);
+  },
+
+  validateAsync() {
+    let asyncValidators = this.get('asyncValidators');
+    let value = this.get('value');
+    let asyncErrors = {};
+
+    for (let i = 0; i < asyncValidators.length; i++) {
+      let validationPromise = asyncValidators[i].isValid(value);
+
+      validationPromise.then(
+        (isValid) => { // fulfilled
+          asyncErrors[asyncValidators[i].validatorName] = !isValid;
+          this.set('asyncErrors', asyncErrors);
+        },
+        (jqXHR, textStatus, errorThrown) => { // rejected
+          alert('rejected');
+        }).catch((error) => { // error
+          alert('error');
+          console.log(error);
+      });
+    }
+  },
+
+  cleanAsyncErrors() {
+    this.set('asyncErrors', false)
   }
 });
 
@@ -76,4 +108,21 @@ export function SameAs(otherInput) {
   this.isValid = function (value) {
     return this.otherInput.value === value;
   }
+}
+
+export function IsUnique(validationService) {
+  this.validatorName = 'isUnique';
+  this.validationService = validationService;
+
+  this.isValid = function (value) {
+    let validationPromise = this.validationService.validate(value);
+
+    return validationPromise.then(function (data) {
+      return new Promise(function (resolve, reject) {
+        resolve(data.isUnique);
+      });
+    });
+
+  };
+
 }

@@ -1,11 +1,12 @@
 import Ember from 'ember';
-import {TextInput, MaxLength, MinLength, MatchPattern, SameAs} from '../utils/text-input';
+import {TextInput, MaxLength, MinLength, MatchPattern, SameAs, IsUnique} from '../utils/text-input';
 
 
 export default Ember.Component.extend({
   username: TextInput.create({
     value: '',
-    validators: [new MaxLength(30), new MinLength(6)]
+    validators: [new MaxLength(30), new MinLength(6)],
+    asyncValidators: [],
   }),
 
   email: TextInput.create({
@@ -37,6 +38,9 @@ export default Ember.Component.extend({
       [new SameAs(passwordInput)]
     );
     confirmPassword.validate();
+
+    let usernameInput = this.get('username');
+    usernameInput.set('asyncValidators', [new IsUnique(this.get('usernameUniquenessValidator'))])
   },
 
   passwordChanged: Ember.observer('password.{value}', function () {
@@ -65,8 +69,15 @@ export default Ember.Component.extend({
 
   actions: {
     onSubmit() {
-      let username = this.get('username').value;
-      this.get('usernameUniquenessValidator').validate(username, this, 'isUsernameUnique');
+      alert('submit');
+    },
+    onUsernameFocusOut() {
+      let username = this.get('username');
+      username.validateAsync();
+    },
+    onUsernameFocusIn() {
+      let username = this.get('username');
+      username.cleanAsyncErrors();
     }
   }
 

@@ -1,10 +1,11 @@
-{{isUsernameUnique}}
+{{username.asyncErrors}}
 
 <form {{action 'onSubmit' on="submit" preventDefault=true}}>
   <div>
     <label for="username">Username</label>
     {{ input type="text" value=username.value id="username" class="form-control"
-             name="username" aria-describedby="usernameHelpBlock" }}
+             name="username" aria-describedby="usernameHelpBlock"
+             focus-out=(action 'onUsernameFocusOut') focus-in=(action 'onUsernameFocusIn')}}
 
     {{#if showUsernameErrors}}
       <div class="alert alert-danger">
