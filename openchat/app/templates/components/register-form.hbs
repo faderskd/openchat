@@ -1,5 +1,3 @@
-{{username.asyncErrors}}
-
 <form {{action 'onSubmit' on="submit" preventDefault=true}}>
   <div>
     <label for="username">Username</label>
@@ -17,6 +15,15 @@
         {{#if username.errors.minLength}}
           <div>
             Username must contain min 6 characters.
+          </div>
+        {{/if}}
+      </div>
+    {{/if}}
+    {{#if showUsernameAsyncErrors}}
+      <div class="alert alert-danger">
+        {{#if username.asyncErrors.isUnique}}
+          <div>
+            Username must be unique.
           </div>
         {{/if}}
       </div>

@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export const TextInput = Ember.Object.extend({
-  value: null,
+  value: '',
   errors: null,
   validators: null,
   pristine: null,
@@ -57,8 +57,10 @@ export const TextInput = Ember.Object.extend({
 
       validationPromise.then(
         (isValid) => { // fulfilled
-          asyncErrors[asyncValidators[i].validatorName] = !isValid;
-          this.set('asyncErrors', asyncErrors);
+          if (!isValid) {
+            asyncErrors[asyncValidators[i].validatorName] = true;
+            this.set('asyncErrors', asyncErrors);
+          }
         },
         (jqXHR, textStatus, errorThrown) => { // rejected
           alert('rejected');

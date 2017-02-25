@@ -51,6 +51,10 @@ export default Ember.Component.extend({
     return !this.get('username.pristine') && this.get('username.errors');
   }),
 
+  showUsernameAsyncErrors: Ember.computed('username.{pristine,asyncErrors}', function () {
+    return !this.get('username.pristine') && this.get('username.asyncErrors');
+  }),
+
   showEmailErrors: Ember.computed('email.{pristine,errors}', function () {
     return !this.get('email.pristine') && this.get('email.errors');
   }),
@@ -73,7 +77,9 @@ export default Ember.Component.extend({
     },
     onUsernameFocusOut() {
       let username = this.get('username');
-      username.validateAsync();
+      if (!username.pristine && !username.errors) {
+        username.validateAsync();
+      }
     },
     onUsernameFocusIn() {
       let username = this.get('username');
