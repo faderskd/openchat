@@ -65,6 +65,11 @@
             Password must contain min 8 characters.
           </div>
         {{/if}}
+        {{#if password.errors.matchPattern}}
+          <div>
+            Password can contain only letters, numbers and characters: !@#$%^&*
+          </div>
+        {{/if}}
       </div>
     {{/if}}
 

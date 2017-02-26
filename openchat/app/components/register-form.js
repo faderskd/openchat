@@ -20,7 +20,11 @@ export default Ember.Component.extend({
 
   password: TextInput.create({
     value: '',
-    validators: [new MaxLength(50), new MinLength(8)]
+    validators: [
+      new MaxLength(50),
+      new MinLength(8),
+      new MatchPattern(/^[a-zA-Z0-9!@#$%^&*]*$/)
+    ]
   }),
 
   confirmPassword: TextInput.create({
