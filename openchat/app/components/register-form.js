@@ -77,7 +77,12 @@ export default Ember.Component.extend({
 
   actions: {
     onSubmit() {
-      alert('submit');
+      let formData = {
+        username: this.get('username').value,
+        email: this.get('email').value,
+        password: this.get('password').value
+      };
+      this.get('onFormSubmission')(formData);
     },
 
     onUsernameFocusOut() {
@@ -89,13 +94,9 @@ export default Ember.Component.extend({
         validatorsPromises.isUnique.then((isUnique) => {
           this.set('usernameWaitingForAsyncValidation', false);
         }, (jqXHR, textStatus, errorThrown) => {
-          // log error
-          // redirect to 500 page
-          alert('http error');
+          this.get('onError')();
         }).catch((error) => {
-          // log error
-          // redirect to 500 page
-          alert(error);
+          this.get('onError')();
         });
       }
     },
