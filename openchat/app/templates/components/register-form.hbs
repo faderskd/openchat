@@ -17,6 +17,11 @@
             Username must contain min 6 characters.
           </div>
         {{/if}}
+        {{#if username.errors.matchPattern}}
+          <div>
+            Username can contain only letters and numbers.
+          </div>
+        {{/if}}
       </div>
     {{/if}}
     {{#if showUsernameAsyncErrors}}

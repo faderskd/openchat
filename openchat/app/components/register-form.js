@@ -5,7 +5,11 @@ import {TextInput, MaxLength, MinLength, MatchPattern, SameAs, IsUnique} from '.
 export default Ember.Component.extend({
   username: TextInput.create({
     value: '',
-    validators: [new MaxLength(30), new MinLength(6)],
+    validators: [
+      new MaxLength(30),
+      new MinLength(6),
+      new MatchPattern(/^[a-zA-Z0-9]*$/)
+    ],
     asyncValidators: [],
   }),
 
