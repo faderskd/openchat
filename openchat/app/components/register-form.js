@@ -24,13 +24,11 @@ export default Ember.Component.extend({
     validators: []
   }),
 
-  submittedData: null,
-  isUsernameUnique: false,
-
   usernameUniquenessValidator: Ember.inject.service(),
 
   init() {
     this._super(...arguments);
+    // SameAs validator needs reference to field
     let passwordInput = this.get('password');
     let confirmPassword = this.get('confirmPassword');
     confirmPassword.set(
@@ -39,6 +37,7 @@ export default Ember.Component.extend({
     );
     confirmPassword.validate();
 
+    // IsUnique needs service
     let usernameInput = this.get('username');
     usernameInput.set('asyncValidators', [new IsUnique(this.get('usernameUniquenessValidator'))])
   },
@@ -71,6 +70,8 @@ export default Ember.Component.extend({
       return this.get('username.errors') || this.get('email.errors') || this.get('password.errors') || this.get('confirmPassword.errors');
   }),
 
+  usernameWaitingForAsyncValidation: false,
+
   actions: {
     onSubmit() {
       alert('submit');
@@ -78,7 +79,11 @@ export default Ember.Component.extend({
     onUsernameFocusOut() {
       let username = this.get('username');
       if (!username.pristine && !username.errors) {
-        username.validateAsync();
+        this.set('usernameWaitingForAsyncValidation', true);
+        let validatorsPromises = username.validateAsync();
+        validatorsPromises.isUnique.then((isUnique) => {
+          this.set('usernameWaitingForAsyncValidation', false);
+        })
       }
     },
     onUsernameFocusIn() {
@@ -86,7 +91,4 @@ export default Ember.Component.extend({
       username.cleanAsyncErrors();
     }
   }
-
-
-
 });

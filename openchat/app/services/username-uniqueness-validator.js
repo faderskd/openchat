@@ -6,11 +6,15 @@ export default Ember.Service.extend({
   validate(username) {
     let url = '/api/users/' + username + '/is-unique';
 
-    return this.ajax({
+    let promise = this.ajax({
       url: url,
       type: 'get',
       contentType: 'application/json'
+    }).then(function (data) {
+      return data.isUnique;
     });
+
+    return promise
   },
 
   ajax(options) {

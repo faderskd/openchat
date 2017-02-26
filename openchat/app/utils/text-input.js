@@ -8,9 +8,6 @@ export const TextInput = Ember.Object.extend({
 
   asyncErrors: false,
   asyncValidators: null,
-  asyncValidationPending: false,
-  asyncValidationDone: false,
-  asyncValidationFailed: false,
 
   init() {
     this._super(...arguments);
@@ -48,32 +45,33 @@ export const TextInput = Ember.Object.extend({
   },
 
   validateAsync() {
-    let asyncValidators = this.get('asyncValidators');
+    let validators = this.get('asyncValidators');
     let value = this.get('value');
-    let asyncErrors = {};
+    let errors = {};
+    let validatorsPromises = {};
 
-    for (let i = 0; i < asyncValidators.length; i++) {
-      let validationPromise = asyncValidators[i].isValid(value);
+    for (let i = 0; i < validators.length; i++) {
+      let validationPromise = validators[i].isValid(value);
+      let validatorName = validators[i].validatorName;
 
-      validationPromise.then(
-        (isValid) => { // fulfilled
-          if (!isValid) {
-            asyncErrors[asyncValidators[i].validatorName] = true;
-            this.set('asyncErrors', asyncErrors);
-          }
-        },
-        (jqXHR, textStatus, errorThrown) => { // rejected
-          alert('rejected');
-        }).catch((error) => { // error
-          alert('error');
-          console.log(error);
+      validationPromise = validationPromise.then((isValid) => {
+        if (!isValid) {
+          errors[validatorName] = !isValid;
+          this.set('asyncErrors', errors);
+        }
+        return isValid;
       });
+
+      validatorsPromises[validatorName] = validationPromise;
     }
+
+    return validatorsPromises;
   },
 
   cleanAsyncErrors() {
     this.set('asyncErrors', false)
-  }
+  },
+
 });
 
 export function MaxLength(maxLength) {
@@ -113,18 +111,13 @@ export function SameAs(otherInput) {
 }
 
 export function IsUnique(validationService) {
+  // User should provide validationService that has method validate(value)
+  // validate should return promise that returns isUnique
   this.validatorName = 'isUnique';
   this.validationService = validationService;
 
   this.isValid = function (value) {
-    let validationPromise = this.validationService.validate(value);
-
-    return validationPromise.then(function (data) {
-      return new Promise(function (resolve, reject) {
-        resolve(data.isUnique);
-      });
-    });
-
+    return this.validationService.validate(value);
   };
 
 }
