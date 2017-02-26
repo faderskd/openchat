@@ -66,8 +66,11 @@ export default Ember.Component.extend({
     return !this.get('confirmPassword.pristine') && this.get('confirmPassword.errors');
   }),
 
-  formInvalid: Ember.computed('username.{errors}', 'email.{errors}', 'password.{errors}', 'confirmPassword.{errors}', function () {
-      return this.get('username.errors') || this.get('email.errors') || this.get('password.errors') || this.get('confirmPassword.errors');
+  formInvalid: Ember.computed('username.{errors}', 'email.{errors}', 'password.{errors}',
+    'confirmPassword.{errors}', 'usernameWaitingForAsyncValidation', 'username.{asyncErrors}', function () {
+      return this.get('username.errors') || this.get('email.errors') || this.get('password.errors')
+        || this.get('confirmPassword.errors') || this.get('usernameWaitingForAsyncValidation')
+        || this.get('username.asyncErrors');
   }),
 
   usernameWaitingForAsyncValidation: false,
@@ -76,16 +79,27 @@ export default Ember.Component.extend({
     onSubmit() {
       alert('submit');
     },
+
     onUsernameFocusOut() {
       let username = this.get('username');
+
       if (!username.pristine && !username.errors) {
         this.set('usernameWaitingForAsyncValidation', true);
         let validatorsPromises = username.validateAsync();
         validatorsPromises.isUnique.then((isUnique) => {
           this.set('usernameWaitingForAsyncValidation', false);
-        })
+        }, (jqXHR, textStatus, errorThrown) => {
+          // log error
+          // redirect to 500 page
+          alert('http error');
+        }).catch((error) => {
+          // log error
+          // redirect to 500 page
+          alert(error);
+        });
       }
     },
+
     onUsernameFocusIn() {
       let username = this.get('username');
       username.cleanAsyncErrors();
