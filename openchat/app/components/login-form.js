@@ -31,8 +31,20 @@ export default Ember.Component.extend({
     return !this.get('password.pristine') && this.get('password.errors');
   }),
 
-  formInvalid: Ember.computed('showUsernameErrors','showPasswordErrors', function () {
-    return this.get('showUsernameErrors') || this.get('showPasswordErrors');
-  })
+  formInvalid: Ember.computed('username.errors', 'password.errors', function () {
+    let username = this.get('username');
+    let password = this.get('password');
+    return username.pristine || password.pristine || username.errors || password.errors;
+  }),
+
+  actions: {
+    onSubmit() {
+      let formData = {
+        username: this.get('username').value,
+        password: this.get('password').value
+      };
+      this.get('onFormSubmission')(formData);
+    }
+  }
 
 });
