@@ -1,8 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Service.extend({
-  validate(username) {
-    let url = '/api/users/' + username + '/is-unique';
+  validate(email) {
+    let url = '/api/users/email/' + email + '/is-unique';
 
     let promise = this.ajax({
       url: url,

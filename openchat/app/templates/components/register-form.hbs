@@ -39,12 +39,22 @@
   <div>
     <label for="email">Email</label>
     {{ input type="text" value=email.value id="email" class="form-control"
-             name="email" aria-describedby="emailHelpBlock" }}
+             name="email" aria-describedby="emailHelpBlock"
+             focus-out=(action 'onEmailFocusOut') focus-in=(action 'onEmailFocusIn')}}
     {{#if showEmailErrors}}
       <div class="alert alert-danger">
         <div>
           Provide valid email address.
         </div>
+      </div>
+    {{/if}}
+    {{#if showEmailAsyncErrors}}
+      <div class="alert alert-danger">
+        {{#if email.asyncErrors.isUnique}}
+          <div>
+            Provided email is already in use.
+          </div>
+        {{/if}}
       </div>
     {{/if}}
   </div>

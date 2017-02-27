@@ -10,12 +10,13 @@ export default Ember.Component.extend({
       new MinLength(6),
       new MatchPattern(/^[a-zA-Z0-9]*$/)
     ],
-    asyncValidators: [],
+    asyncValidators: []
   }),
 
   email: TextInput.create({
     value: '',
-    validators: [new MatchPattern(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)]
+    validators: [new MatchPattern(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)],
+    asyncValidators: []
   }),
 
   password: TextInput.create({
@@ -33,6 +34,7 @@ export default Ember.Component.extend({
   }),
 
   usernameUniquenessValidator: Ember.inject.service(),
+  emailUniquenessValidator: Ember.inject.service(),
 
   init() {
     this._super(...arguments);
@@ -47,7 +49,10 @@ export default Ember.Component.extend({
 
     // IsUnique needs service
     let usernameInput = this.get('username');
-    usernameInput.set('asyncValidators', [new IsUnique(this.get('usernameUniquenessValidator'))])
+    usernameInput.set('asyncValidators', [new IsUnique(this.get('usernameUniquenessValidator'))]);
+
+    let emailInput = this.get('email');
+    emailInput.set('asyncValidators', [new IsUnique(this.get('emailUniquenessValidator'))]);
   },
 
   passwordChanged: Ember.observer('password.{value}', function () {
@@ -66,6 +71,10 @@ export default Ember.Component.extend({
     return !this.get('email.pristine') && this.get('email.errors');
   }),
 
+  showEmailAsyncErrors: Ember.computed('email.{pristine,asyncErrors}', function () {
+    return !this.get('email.pristine') && this.get('email.asyncErrors');
+  }),
+
   showPasswordErrors: Ember.computed('password.{pristine,errors}', function () {
     return !this.get('password.pristine') && this.get('password.errors');
   }),
@@ -75,13 +84,16 @@ export default Ember.Component.extend({
   }),
 
   formInvalid: Ember.computed('username.{errors}', 'email.{errors}', 'password.{errors}',
-    'confirmPassword.{errors}', 'usernameWaitingForAsyncValidation', 'username.{asyncErrors}', function () {
+    'confirmPassword.{errors}', 'usernameWaitingForAsyncValidation', 'username.{asyncErrors}',
+    'emailWaitingForAsyncValidation', 'email.{asyncErrors}', function () {
       return this.get('username.errors') || this.get('email.errors') || this.get('password.errors')
         || this.get('confirmPassword.errors') || this.get('usernameWaitingForAsyncValidation')
-        || this.get('username.asyncErrors');
+        || this.get('username.asyncErrors') || this.get('emailWaitingForAsyncValidation')
+        || this.get('email.asyncErrors');
   }),
 
   usernameWaitingForAsyncValidation: false,
+  emailWaitingForAsyncValidation: false,
 
   actions: {
     onSubmit() {
@@ -112,6 +124,27 @@ export default Ember.Component.extend({
     onUsernameFocusIn() {
       let username = this.get('username');
       username.cleanAsyncErrors();
-    }
+    },
+
+    onEmailFocusOut() {
+      let email = this.get('email');
+
+      if (!email.pristine && !email.errors) {
+        this.set('emailWaitingForAsyncValidation', true);
+        let validatorsPromises = email.validateAsync();
+        validatorsPromises.isUnique.then((isUnique) => {
+          this.set('emailWaitingForAsyncValidation', false);
+        }, (jqXHR, textStatus, errorThrown) => {
+          this.get('onError')();
+        }).catch((error) => {
+          this.get('onError')();
+        });
+      }
+    },
+
+    onEmailFocusIn() {
+      let email = this.get('email');
+      email.cleanAsyncErrors();
+    },
   }
 });

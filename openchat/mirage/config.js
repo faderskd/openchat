@@ -10,6 +10,15 @@ export default function() {
     }
   });
 
+  this.get('/users/email/:email/is-unique', (schema, request) => {
+    let email = request.params.email;
+    let user = schema.users.where({email: email});
+
+    return {
+      isUnique: user.length === 0
+    }
+  });
+
   this.post('/users', function(schema, request) {
     let attrs = this.normalizedRequestAttrs();
 

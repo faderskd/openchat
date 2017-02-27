@@ -8,7 +8,6 @@ export default Ember.Controller.extend({
     },
 
     handleFormSubmission(formData) {
-      console.log(formData);
       let newUser = this.get('store').createRecord('user', {
         username: formData.username,
         email: formData.email,
