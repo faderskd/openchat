@@ -95,6 +95,27 @@ export default Ember.Component.extend({
   usernameWaitingForAsyncValidation: false,
   emailWaitingForAsyncValidation: false,
 
+  _onFieldFocusOut(fieldName) {
+    let field = this.get(fieldName);
+
+    if (!field.pristine && !field.errors) {
+      this.set(fieldName + 'WaitingForAsyncValidation', true);
+      let validatorsPromises = field.validateAsync();
+      validatorsPromises.isUnique.then((isUnique) => {
+        this.set(fieldName + 'WaitingForAsyncValidation', false);
+      }, (jqXHR, textStatus, errorThrown) => {
+        this.get('onError')();
+      }).catch((error) => {
+        this.get('onError')();
+      });
+    }
+  },
+
+  _onFieldFocusIn(fieldName) {
+    let field = this.get(fieldName);
+    field.cleanAsyncErrors();
+  },
+
   actions: {
     onSubmit() {
       let formData = {
@@ -106,45 +127,19 @@ export default Ember.Component.extend({
     },
 
     onUsernameFocusOut() {
-      let username = this.get('username');
-
-      if (!username.pristine && !username.errors) {
-        this.set('usernameWaitingForAsyncValidation', true);
-        let validatorsPromises = username.validateAsync();
-        validatorsPromises.isUnique.then((isUnique) => {
-          this.set('usernameWaitingForAsyncValidation', false);
-        }, (jqXHR, textStatus, errorThrown) => {
-          this.get('onError')();
-        }).catch((error) => {
-          this.get('onError')();
-        });
-      }
+      this._onFieldFocusOut('username');
     },
 
     onUsernameFocusIn() {
-      let username = this.get('username');
-      username.cleanAsyncErrors();
+      this._onFieldFocusIn('username');
     },
 
     onEmailFocusOut() {
-      let email = this.get('email');
-
-      if (!email.pristine && !email.errors) {
-        this.set('emailWaitingForAsyncValidation', true);
-        let validatorsPromises = email.validateAsync();
-        validatorsPromises.isUnique.then((isUnique) => {
-          this.set('emailWaitingForAsyncValidation', false);
-        }, (jqXHR, textStatus, errorThrown) => {
-          this.get('onError')();
-        }).catch((error) => {
-          this.get('onError')();
-        });
-      }
+      this._onFieldFocusOut('email');
     },
 
     onEmailFocusIn() {
-      let email = this.get('email');
-      email.cleanAsyncErrors();
+      this._onFieldFocusIn('email');
     },
   }
 });
