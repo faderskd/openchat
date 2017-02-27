@@ -14,12 +14,12 @@ export default Ember.Service.extend({
       return data.isUnique;
     });
 
-    return promise
+    return promise;
   },
 
   ajax(options) {
     return new Promise(function (resolve, reject) {
       Ember.$.ajax(options).done(resolve).fail(reject);
-    })
+    });
   }
 });
