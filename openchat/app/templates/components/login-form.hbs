@@ -1,0 +1,26 @@
+<form>
+  <div>
+    <label for="username">Username</label>
+    {{ input type="text" value=username.value id="username" class="form-control"
+             name="username" aria-describedby="usernameHelpBlock" }}
+
+    {{#if showUsernameErrors}}
+      <div class="alert alert-danger">
+        This field is required
+      </div>
+    {{/if}}
+  </div>
+
+  <div>
+    <label for="password">Password</label>
+    {{ input type="password" value=password.value id="password" class="form-control"
+             name="password" aria-describedby="passwordHelpBlock" }}
+    {{# if showPasswordErrors }}
+      <div class="alert alert-danger">
+        This field is required
+      </div>
+    {{/if}}
+  </div>
+
+  <button type="submit" class="btn btn-primary" disabled={{formInvalid}}>Login</button>
+</form>
