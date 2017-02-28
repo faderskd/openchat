@@ -1,4 +1,6 @@
-export default function() {
+import Mirage from 'ember-cli-mirage';
+
+export default function () {
   this.namespace = 'api';
 
   this.get('/users/:username/is-unique', (schema, request) => {
@@ -19,7 +21,7 @@ export default function() {
     }
   });
 
-  this.post('/users', function(schema, request) {
+  this.post('/users', function (schema, request) {
     let attrs = this.normalizedRequestAttrs();
 
     let user = schema.db.users.insert({
@@ -41,5 +43,24 @@ export default function() {
     };
 
     return response;
+  });
+
+  this.post('/login', function (schema, request) {
+    let attrs = this.normalizedRequestAttrs();
+    let users = schema.db.users.where({username: attrs.username, password: attrs.password});
+    if (users.length > 0) {
+      return {
+        data: {
+          type: 'user',
+          id: users[0].id,
+          attributes: {
+            username: users[0].username,
+            email: users[0].email,
+            token: users[0].token
+          }
+        }
+      };
+    }
+    return new Mirage.Response(400, {a: 'header'}, {nonFieldErrors: ['Bad login or password']});
   });
 }

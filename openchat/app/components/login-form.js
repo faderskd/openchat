@@ -20,7 +20,7 @@ export default Ember.Component.extend({
     this._super(...arguments);
     let username = this.get('username');
     let password = this.get('password');
-    this.nonFieldErrors = null;
+    this.nonFieldErrors = [];
   },
 
   showUsernameErrors: Ember.computed('username.{pristine,errors}', function () {
@@ -43,7 +43,14 @@ export default Ember.Component.extend({
         username: this.get('username').value,
         password: this.get('password').value
       };
-      this.get('onFormSubmission')(formData);
+      let component = this;
+      this.set('nonFieldErrors', []);
+      this.get('onFormSubmission')(formData).catch(function (error) {
+        let serverNonFieldErrors = error.errors[0].detail.nonFieldErrors;
+        let componentNonFieldErrors = component.get('nonFieldErrors');
+        for (let i=0; i < serverNonFieldErrors.length; i++)
+          componentNonFieldErrors.pushObject(serverNonFieldErrors[i]);
+      });
     }
   }
 

@@ -1,4 +1,9 @@
-<form {{action 'onSubmit' on='submit' preventDefault=true}}>
+{{#each nonFieldErrors as |error| }}
+    <div class="alert alert-danger">
+      {{error}}
+    </div>
+{{/each}}
+<form {{action 'onSubmit' on='submit'}}>
   <div>
     <label for="username">Username</label>
     {{ input type="text" value=username.value id="username" class="form-control"
