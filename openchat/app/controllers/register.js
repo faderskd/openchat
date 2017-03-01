@@ -13,7 +13,9 @@ export default Ember.Controller.extend({
         email: formData.email,
         password: formData.password
       });
-      newUser.save();
+      newUser.save().then(() => {
+        this.transitionToRoute('messages');
+      });
     }
   }
 });

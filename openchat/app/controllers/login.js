@@ -11,7 +11,7 @@ export default Ember.Controller.extend({
         authentication.login(formData).then(function (data) {
           controller.get('store').push(data);
           resolve(data);
-        }, reject);
+        }, reject).then(() => {controller.transitionToRoute('messages')});
       });
     },
   }

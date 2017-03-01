@@ -63,4 +63,31 @@ export default function () {
     }
     return new Mirage.Response(400, {a: 'header'}, {nonFieldErrors: ['Bad login or password']});
   });
+
+  this.get('/messages', function (schema, request) {
+    let response = {
+      data: [{
+        type: 'message',
+        id: 1,
+        attributes: {
+          content: 'Siema siema',
+          'sent-at': new Date(),
+          'sender-id': 11,
+          'receiver-id': 12
+        }
+      },
+        {
+          type: 'message',
+          id: 2,
+          attributes: {
+            content: 'Siemandorro',
+            'sent-at': new Date(),
+            'sender-id': 11,
+            'receiver-id': 12
+          }
+        }
+      ]
+    };
+    return response;
+  })
 }
