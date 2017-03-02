@@ -2,6 +2,8 @@ import Ember from 'ember';
 
 
 export default Ember.Controller.extend({
+  userData: Ember.inject.service(),
+
   actions: {
     handleError() {
       this.transitionToRoute('error');
@@ -13,7 +15,12 @@ export default Ember.Controller.extend({
         email: formData.email,
         password: formData.password
       });
-      newUser.save().then(() => {
+
+      newUser.save().then((newUser) => {
+        this.get('userData').set('username', newUser.data.username);
+        this.get('userData').set('email', newUser.data.email);
+        this.get('userData').set('token', newUser.data.token);
+
         this.transitionToRoute('messages');
       });
     }

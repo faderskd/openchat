@@ -10,7 +10,7 @@ Router.map(function() {
   this.route('register');
   this.route('login');
   this.route('error');
-  this.route('messages');
+  this.route('messages', function() {});
 });
 
 export default Router;
