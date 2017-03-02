@@ -6,6 +6,7 @@ export default Ember.Controller.extend({
   init() {
     this._super(...arguments);
     let username = this.get('userData').get('username');
+    let conversation = this.get('store').findAll('conversation').get('firstObject');
     this.transitionToRoute('messages.show', username);
   }
 });

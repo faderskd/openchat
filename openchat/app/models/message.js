@@ -4,5 +4,6 @@ export default DS.Model.extend({
   content: DS.attr('String'),
   sentAt: DS.attr('Date'),
 
-  conversation: DS.belongsTo('conversation')
+  conversation: DS.belongsTo('conversation'),
+  sender: DS.belongsTo('user')
 });
