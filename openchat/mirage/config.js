@@ -91,8 +91,5 @@ export default function () {
     return response;
   });
 
-  this.get('/conversations', function ({conversations}, request) {
-    console.log(conversations.first());
-    return conversations.all();
-  });
+  this.get('/conversations', 'conversations');
 }
