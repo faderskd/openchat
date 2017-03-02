@@ -11,7 +11,9 @@ export default Ember.Controller.extend({
 
   actions: {
     handleSentMessage(message) {
-      console.log(message);
+      this.get('store').createRecord('message', {
+
+      });
     }
   }
 });

@@ -5,6 +5,6 @@ export default DS.Model.extend({
   email: DS.attr('string'),
   password: DS.attr('string', {defaultValue: null}),
   token: DS.attr('string', {defaultValue: null}),
-  sentMessages: DS.hasMany('message', {inverse: 'sender'}),
-  receivedMessages: DS.hasMany('message', {inverse: 'receiver'})
+
+  conversations: DS.hasMany('conversation')
 });
