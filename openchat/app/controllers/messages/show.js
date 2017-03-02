@@ -5,7 +5,14 @@ export default Ember.Controller.extend({
 
   init() {
     this._super(...arguments);
-    let username = this.get('userData').get('username');
-    this.transitionToRoute('messages.show', username);
+    console.log(this.get('params'));
+  },
+
+  actions: {
+    handleSentMessage(message) {
+      this.get('store').createRecord('message', {
+
+      });
+    }
   }
 });
