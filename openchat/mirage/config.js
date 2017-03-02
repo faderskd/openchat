@@ -91,10 +91,8 @@ export default function () {
     return response;
   });
 
-  this.get('/conversations', function (schema, request) {
-    console.log(request);
-    return {
-
-    }
-  })
+  this.get('/conversations', function ({conversations}, request) {
+    console.log(conversations.first());
+    return conversations.all();
+  });
 }

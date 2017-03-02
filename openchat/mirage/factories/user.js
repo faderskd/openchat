@@ -1,8 +1,17 @@
-import { Factory } from 'ember-cli-mirage';
+import { Factory, association, faker } from 'ember-cli-mirage';
 
 export default Factory.extend({
-  username(i) {return `User${i}`;},
-  email(i) {return `user${i}@gmail.com`;},
-  token(i) {return `tokentoken1234and${i}`;},
-  password(i) {return `test${i}`;}
+  username() {
+    return faker.internet.userName();
+  },
+  email() {
+    return faker.internet.email;
+  },
+  token() {
+    return faker.random.word();
+  },
+
+  password: 'password1234',
+
+  // conversations: association()
 });
