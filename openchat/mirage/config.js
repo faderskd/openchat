@@ -89,5 +89,12 @@ export default function () {
       ]
     };
     return response;
+  });
+
+  this.get('/conversations', function (schema, request) {
+    console.log(request);
+    return {
+
+    }
   })
 }
