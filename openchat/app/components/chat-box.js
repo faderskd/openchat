@@ -2,10 +2,11 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   message: '',
+  messages: null,
 
   actions: {
-    handleMessageSending(m, e) {
-      console.log(e);
+    enterPressedOnMessageInput() {
+      this.get('onSentMessage')(this.get('message'));
     }
   }
 });

@@ -8,4 +8,10 @@ export default Ember.Controller.extend({
       this.set('messages', data)
     });
   },
+
+  actions: {
+    handleSentMessage(message) {
+      console.log(message);
+    }
+  }
 });
