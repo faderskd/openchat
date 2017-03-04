@@ -1,9 +1,9 @@
-import { JSONAPISerializer } from 'ember-cli-mirage';
+import BaseSerializer from './application';
 
-export default JSONAPISerializer.extend({
+export default BaseSerializer.extend({
   serialize() {
     console.log('jestem user');
-    let json = JSONAPISerializer.prototype.serialize.apply(this, arguments);
+    let json = BaseSerializer.prototype.serialize.apply(this, arguments);
 
     if (Array.isArray(json.data)) {
       json.data.forEach((data, i) => {

@@ -1,10 +1,12 @@
-import { JSONAPISerializer } from 'ember-cli-mirage';
+import BaseSerializer from './application';
 
-export default JSONAPISerializer.extend({
+export default BaseSerializer.extend({
   serialize() {
     console.log('jestem conversation');
-    let json = JSONAPISerializer.prototype.serialize.apply(this, arguments);
-    console.log(json);
+    console.log(arguments);
+    let json = BaseSerializer.prototype.serialize.apply(this, arguments);
+    console.log(json.data[0].relationships.users.data);
+
     if (Array.isArray(json.data)) {
       json.data.forEach((data, i) => {
         json.data[i].relationships.users.data = this.userSerialize(data);
@@ -12,8 +14,10 @@ export default JSONAPISerializer.extend({
     } else {
       json.data.relationships.users.data = this.userSerialize(json.data);
     }
+
     console.log('po');
     console.log(json);
+
     return json;
   },
 
@@ -22,6 +26,8 @@ export default JSONAPISerializer.extend({
       id: this.registry.schema.conversationUsers.find(conversationUser.id).userId,
       type: 'user'
     }));
+
     return result;
   }
+
 });

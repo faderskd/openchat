@@ -66,55 +66,37 @@ export default function () {
 
   this.get('/messages', 'message');
 
-  this.get('/conversations', function (schema, request) {
-    return {
-      data: [
-        {
-          type: 'conversations',
-          id: 1,
-          attributes: {
-            'updated-at': new Date()
-          },
+  // this.get('/conversations', function (schema, request) {
+  //   return {
+  //     data: [
+  //       {
+  //         type: 'conversations',
+  //         id: 1,
+  //         attributes: {
+  //           'updated-at': new Date()
+  //         },
+  //
+  //         relationships: {
+  //           users: {
+  //             data: [
+  //               {type: 'users', id: 1},
+  //               {type: 'users', id: 2}
+  //             ]
+  //           },
+  //           messages: {
+  //             data: [
+  //               {type: 'messages', id: 1},
+  //               {type: 'messages', id: 2}
+  //             ]
+  //           }
+  //         }
+  //       }
+  //     ]
+  //   };
+  // });
 
-          relationships: {
-            users: {
-              data: [
-                {type: 'users', id: 1},
-                {type: 'users', id: 2}
-              ]
-            },
-            messages: {
-              data: [
-                {type: 'messages', id: 1},
-                {type: 'messages', id: 2}
-              ]
-            }
-          }
-        }
-      ],
-      included: [
-        {
-          type: 'user',
-          id: 1,
-          attributes: {
-            username: 'beczkowb',
-            email: 'beczkowb@gmail.com'
-          }
-        },
-        {
-          type: 'user',
-          id: 2,
-          attributes: {
-            username: 'klaudiab',
-            email: 'klaudiab@gmail.com'
-          }
-        }
-      ]
-
-    };
-  });
   this.get('/conversations/:id');
-  // this.get('/conversations');
+  this.get('/conversations');
 
   this.get('/users');
   this.get('/users/:id');
