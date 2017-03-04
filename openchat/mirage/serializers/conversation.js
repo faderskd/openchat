@@ -3,9 +3,9 @@ import BaseSerializer from './application';
 export default BaseSerializer.extend({
   serialize() {
     console.log('jestem conversation');
-    console.log(arguments);
+
     let json = BaseSerializer.prototype.serialize.apply(this, arguments);
-    console.log(json.data[0].relationships.users.data);
+    console.log(json);
 
     if (Array.isArray(json.data)) {
       json.data.forEach((data, i) => {
@@ -13,6 +13,14 @@ export default BaseSerializer.extend({
       });
     } else {
       json.data.relationships.users.data = this.userSerialize(json.data);
+    }
+
+    if (json.included && Array.isArray(json.included)) {
+      json.included.forEach((data, i) => {
+        json.included[i] = this.includeUser(data);
+      });
+    } else if (json.included && !Array.isArray(json.included)) {
+      json.included = this.includeUser(json.included);
     }
 
     console.log('po');
@@ -28,6 +36,13 @@ export default BaseSerializer.extend({
     }));
 
     return result;
-  }
+  },
 
+  includeUser(conversationUser) {
+    let user = {};
+    user.id = conversationUser.relationships.user.data.id;
+    user.type = 'users';
+    user.attributes = this.registry.schema.users.find(user.id);
+    return user;
+  }
 });

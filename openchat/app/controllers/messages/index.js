@@ -11,11 +11,6 @@ export default Ember.Controller.extend({
       .findAll('conversation', {include: 'users'}).then((conversations) => {
         conversations.forEach((c) => {
           console.log('jestem w petli');
-          c.get('users').then((users) => {
-            users.forEach((u) => {
-              console.log(u.data.username);
-            });
-          });
         });
       });
 
