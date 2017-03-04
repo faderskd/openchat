@@ -7,7 +7,7 @@ export default Ember.Controller.extend({
     this._super(...arguments);
     let username = this.get('userData').get('username');
     let conversation = this.get('store')
-      .findAll('conversation', {include: 'user'})
+      .findAll('conversation')
       .get('firstObject');
 
     // let interlocutor = null;
@@ -18,7 +18,7 @@ export default Ember.Controller.extend({
     //     break;
     //   }
     // });
-
+    //
     // this.transitionToRoute('messages.show', conversation);
   }
 });

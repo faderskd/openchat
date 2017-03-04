@@ -5,13 +5,11 @@ export default Factory.extend({
     return faker.internet.userName();
   },
   email() {
-    return faker.internet.email;
+    return faker.internet.email();
   },
   token() {
     return faker.random.word();
   },
 
   password: 'password1234',
-
-  // conversations: association()
 });
