@@ -7,7 +7,7 @@ export default Ember.Controller.extend({
     this._super(...arguments);
     let username = this.get('userData').get('username');
     let conversation = this.get('store')
-      .findAll('conversation')
+      .findAll('conversation', {include: 'users'})
       .get('firstObject');
 
     // let interlocutor = null;
