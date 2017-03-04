@@ -95,7 +95,26 @@ export default function () {
   //   };
   // });
 
-  this.get('/conversations/:id');
+  // this.get('/conversations/:id');
+  // this.get('/conversations', function (schema, request) {
+  //   console.log(request);
+  //   // let token = request.requestHeaders.API_KEY;
+  //   let token = 'token-beczkowb';
+  //
+  //   let user = schema.users.findBy({token: token});
+  //   console.log(user);
+  //   console.log(user.conversations);
+  //
+  //   let conversations = [];
+  //   for (let i = 0; user.conversations.models.length > i; i++) {
+  //     let conversationUser = user.conversations.models[i];
+  //     conversations.push(conversationUser.conversation);
+  //   }
+  //   console.log(conversations);
+  //   let responseBody = {
+  //     data: conversations
+  //   }
+  // });
   this.get('/conversations');
 
   this.get('/users');

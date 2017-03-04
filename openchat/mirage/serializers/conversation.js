@@ -1,9 +1,7 @@
 import BaseSerializer from './application';
 
 export default BaseSerializer.extend({
-  serialize() {
-    console.log('jestem conversation');
-
+  serialize(response, request) {
     let json = BaseSerializer.prototype.serialize.apply(this, arguments);
     console.log(json);
 
@@ -23,9 +21,31 @@ export default BaseSerializer.extend({
       json.included = this.includeUser(json.included);
     }
 
-    console.log('po');
-    console.log(json);
+    let token = request.requestHeaders.API_KEY;
+    console.log(request);
+    let authUser = this.registry.schema.users.findBy({token: token});
 
+    let filteredConversations = [];
+    let foundAuthUser;
+
+    json.data.forEach((conversation) => {
+      foundAuthUser = false;
+
+      conversation.relationships.users.data.forEach((user) => {
+        if (authUser.id === user.id) {
+          foundAuthUser = true;
+        }
+      });
+
+      if (foundAuthUser) {
+        filteredConversations.push(conversation);
+      }
+    });
+
+    console.log('przefiltrowane');
+    console.log(filteredConversations);
+
+    json.data = filteredConversations;
     return json;
   },
 
@@ -44,5 +64,6 @@ export default BaseSerializer.extend({
     user.type = 'users';
     user.attributes = this.registry.schema.users.find(user.id);
     return user;
-  }
+  },
+
 });
