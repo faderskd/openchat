@@ -15,12 +15,8 @@ export default Ember.Controller.extend({
           controller.get('userData').set('username', data.data.attributes.username);
           controller.get('userData').set('email', data.data.attributes.email);
           controller.get('userData').set('token', data.data.attributes.token);
-
-          resolve(data);
-        }, reject).then((userData) => {
-
           controller.transitionToRoute('messages');
-        });
+        }, reject)
       });
     },
   }

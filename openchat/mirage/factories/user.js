@@ -13,5 +13,4 @@ export default Factory.extend({
 
   password: 'password1234',
 
-  // conversations: association()
 });

@@ -4,7 +4,4 @@ export default Factory.extend({
   updatedAt() {
     return new Date();
   },
-
-  // messages: association(),
-  // users: association()
 });
