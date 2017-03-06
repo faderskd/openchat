@@ -31,6 +31,21 @@ export default function(server) {
     user: faderskd,
     conversation: conversationBeczkowbFaderskd
   });
+  let m1 = server.create('message', {
+    sender: beczkowb,
+    conversation: conversationBeczkowbFaderskd,
+    content: 'hello',
+    sentAt: new Date()
+  });
+  let m2 = server.create('message', {
+    sender: faderskd,
+    conversation: conversationBeczkowbFaderskd,
+    content: 'hello hello',
+    sentAt: new Date()
+  });
+
+
+
 
   let conversationBeczkowbKlaudiab = server.create('conversation', {
     updatedAt: new Date()

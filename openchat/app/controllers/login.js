@@ -19,7 +19,7 @@ export default Ember.Controller.extend({
           resolve(data);
         }, reject).then((userData) => {
 
-          controller.transitionToRoute('messages');
+          controller.transitionToRoute('messages', 'beczkowb');
         });
       });
     },

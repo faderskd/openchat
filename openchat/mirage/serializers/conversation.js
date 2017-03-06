@@ -3,8 +3,8 @@ import BaseSerializer from './application';
 export default BaseSerializer.extend({
   serialize(response, request) {
     let json = BaseSerializer.prototype.serialize.apply(this, arguments);
+    console.log('asdfsadf');
     console.log(json);
-
     if (Array.isArray(json.data)) {
       json.data.forEach((data, i) => {
         json.data[i].relationships.users.data = this.userSerialize(data);
@@ -15,14 +15,15 @@ export default BaseSerializer.extend({
 
     if (json.included && Array.isArray(json.included)) {
       json.included.forEach((data, i) => {
-        json.included[i] = this.includeUser(data);
+        if (data.type === 'conversation-users') {
+          json.included[i] = this.includeUser(data);
+        }
       });
-    } else if (json.included && !Array.isArray(json.included)) {
+    } else if (json.included && !Array.isArray(json.included) && json.included.type === 'conversation-users') {
       json.included = this.includeUser(json.included);
     }
 
     let token = request.requestHeaders.API_KEY;
-    console.log(request);
     let authUser = this.registry.schema.users.findBy({token: token});
 
     let filteredConversations = [];
@@ -41,9 +42,6 @@ export default BaseSerializer.extend({
         filteredConversations.push(conversation);
       }
     });
-
-    console.log('przefiltrowane');
-    console.log(filteredConversations);
 
     json.data = filteredConversations;
     return json;
