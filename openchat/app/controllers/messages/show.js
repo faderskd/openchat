@@ -7,12 +7,14 @@ export default Ember.Controller.extend({
     this._super(...arguments);
   },
 
-
   actions: {
     handleSentMessage(message) {
       this.get('store').createRecord('message', {
-
-      });
+        content: message,
+        sentAt: new Date(),
+        conversation: this.model.conversation,
+        sender: this.model.currentUser
+      }).save();
     }
   }
 });

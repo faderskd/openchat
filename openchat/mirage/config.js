@@ -66,6 +66,8 @@ export default function () {
 
   this.get('/conversations/', 'conversations');
   this.get('/users', 'users');
+  this.get('/users/:id', 'users');
   this.get('/messages', 'messages');
   this.get('/messages/:id', 'messages');
+  this.post('/messages/', 'messages');
 }

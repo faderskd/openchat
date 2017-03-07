@@ -5,7 +5,7 @@ export default Ember.Route.extend({
 
   beforeModel() {
     let currentUserUsername = this.get('userData').username;
-    return this.store.findAll('conversation', {include: 'users'}).then((conversations) => {
+    return this.store.findAll('conversation', {include: 'users, messages'}).then((conversations) => {
       let lastConversationUsers = conversations.sortBy('updatedAt').get('firstObject').get('users');
       // filter last conversation's users to find one we talked to
       let lastConversationUser = lastConversationUsers.find((item) => {

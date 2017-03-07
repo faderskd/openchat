@@ -1,1 +1,1 @@
-{{ chat-box messages=messages onSentMessage=(action 'handleSentMessage') }}
+{{ chat-box messages=model.conversation.messages onSentMessage=(action 'handleSentMessage') }}
