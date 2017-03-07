@@ -15,6 +15,7 @@ export default Ember.Controller.extend({
           controller.get('userData').set('username', data.data.attributes.username);
           controller.get('userData').set('email', data.data.attributes.email);
           controller.get('userData').set('token', data.data.attributes.token);
+          controller.get('userData').set('id', data.data.id);
 
           resolve(data);
         }, reject).then((userData) => {

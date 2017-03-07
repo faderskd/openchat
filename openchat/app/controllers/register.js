@@ -20,6 +20,7 @@ export default Ember.Controller.extend({
         this.get('userData').set('username', newUser.data.username);
         this.get('userData').set('email', newUser.data.email);
         this.get('userData').set('token', newUser.data.token);
+        this.get('userData').set('token', newUser.data.id);
 
         this.transitionToRoute('messages');
       });
