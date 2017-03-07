@@ -1,103 +1,135 @@
-<form {{action 'onSubmit' on="submit" preventDefault=true}}>
-  <div>
-    <label for="username">Username</label>
-    {{ input type="text" value=username.value id="username" class="form-control"
-             name="username" aria-describedby="usernameHelpBlock"
-             focus-out=(action 'onUsernameFocusOut') focus-in=(action 'onUsernameFocusIn')}}
-
-    {{#if showUsernameErrors}}
-      <div class="alert alert-danger">
-        {{#if username.errors.maxLength}}
-          <div>
-            Username must contain max 30 characters.
-          </div>
-        {{/if}}
-        {{#if username.errors.minLength}}
-          <div>
-            Username must contain min 6 characters.
-          </div>
-        {{/if}}
-        {{#if username.errors.matchPattern}}
-          <div>
-            Username can contain only letters and numbers.
-          </div>
-        {{/if}}
-      </div>
-    {{/if}}
-    {{#if showUsernameAsyncErrors}}
-      <div class="alert alert-danger">
-        {{#if username.asyncErrors.isUnique}}
-          <div>
-            Username must be unique.
-          </div>
-        {{/if}}
-      </div>
-    {{/if}}
-
+<div class="container mycontainer">
+  <div class="top-logo">
+    <h1 class="logo">OpenChat says <i>Hello!</i></h1>
   </div>
+  <div class="col-md-4 col-md-offset-4 formu">
+    <h3 class="register-here">Register here!</h3>
+    <form {{action 'onSubmit' on="submit" preventDefault=true}}>
+    <div class="form-group">
+      <label for="username">Username</label>
+      {{ input type="text" value=username.value id="username" class="form-control"
+               name="username" aria-describedby="usernameHelpBlock" placeholder="username"
+               focus-out=(action 'onUsernameFocusOut') focus-in=(action 'onUsernameFocusIn')}}
+     </div>
 
-  <div>
-    <label for="email">Email</label>
-    {{ input type="text" value=email.value id="email" class="form-control"
-             name="email" aria-describedby="emailHelpBlock"
-             focus-out=(action 'onEmailFocusOut') focus-in=(action 'onEmailFocusIn')}}
-    {{#if showEmailErrors}}
-      <div class="alert alert-danger">
-        <div>
-          Provide valid email address.
+    <div class="form-group">
+      <label for="email">Email</label>
+      {{ input type="text" value=email.value id="email" class="form-control"
+               name="email" aria-describedby="emailHelpBlock" placeholder="email"
+               focus-out=(action 'onEmailFocusOut') focus-in=(action 'onEmailFocusIn')}}
+
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      {{ input type="password" value=password.value id="password" class="form-control"
+               name="password"  placeholder="password" aria-describedby="passwordHelpBlock" }}
+
+
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword">Confirm Password</label>
+      {{ input type="password" value=confirmPassword.value id="confirmPassword" class="form-control"
+               name="confirmPassword"  placeholder="confirm password" aria-describedby="confirmPasswordHelpBlock"}}
+
+
+    </div>
+  <div class="click-the-button">
+    <button type="submit" class="btn col-md-3  col-md-offset-4" disabled={{formInvalid}}>Register</button>
+  </div>
+  </form>
+  </div>
+    <div class=" col-md-4 validation_results">
+      <div class="error_container">
+      {{#if showUsernameErrors}}
+        <div class="arrow-left"></div>
+        <div class="validation_result_comment">
+          {{#if username.errors.maxLength}}
+
+            <div>
+              Username must contain max 30 characters.
+            </div>
+          {{/if}}
+          {{#if username.errors.minLength}}
+            <div>
+              Username must contain min 6 characters.
+            </div>
+          {{/if}}
+          {{#if username.errors.matchPattern}}
+            <div>
+              Username can contain only letters and numbers.
+            </div>
+          {{/if}}
         </div>
-      </div>
-    {{/if}}
-    {{#if showEmailAsyncErrors}}
-      <div class="alert alert-danger">
-        {{#if email.asyncErrors.isUnique}}
-          <div>
-            Provided email is already in use.
-          </div>
-        {{/if}}
-      </div>
-    {{/if}}
-  </div>
 
-  <div>
-    <label for="password">Password</label>
-    {{ input type="password" value=password.value id="password" class="form-control"
-             name="password" aria-describedby="passwordHelpBlock" }}
-    {{# if showPasswordErrors }}
-      <div class="alert alert-danger">
-        {{#if password.errors.maxLength}}
-          <div>
-            Password must contain max 50 characters.
-          </div>
-        {{/if}}
-        {{#if password.errors.minLength}}
-          <div>
-            Password must contain min 8 characters.
-          </div>
-        {{/if}}
-        {{#if password.errors.matchPattern}}
-          <div>
-            Password can contain only letters, numbers and characters: !@#$%^&*
-          </div>
-        {{/if}}
-      </div>
-    {{/if}}
+      {{/if}}
 
-  </div>
-
-  <div>
-    <label for="confirmPassword">Confirm Password</label>
-    {{ input type="password" value=confirmPassword.value id="confirmPassword" class="form-control"
-             name="confirmPassword" aria-describedby="confirmPasswordHelpBlock"}}
-    {{#if showConfirmPasswordErrors}}
-      <div class="alert alert-danger">
-        <div>
-          Password fields does not match
+      {{#if showUsernameAsyncErrors}}
+        <div class="arrow-left"></div>
+        <div class="validation_result_comment">
+          {{#if username.asyncErrors.isUnique}}
+            <div>
+              Username must be unique.
+            </div>
+          {{/if}}
         </div>
+      {{/if}}
       </div>
-    {{/if}}
+      <div class="error_container">
+      {{#if showEmailErrors}}
+        <div class="arrow-left"></div>
+        <div class="validation_result_comment">
+          <div>
+            Provide valid email address.
+          </div>
+        </div>
+      {{/if}}
 
-  </div>
+      {{#if showEmailAsyncErrors}}
+        <div class="arrow-left"></div>
+        <div class="validation_result_comment">
+          {{#if email.asyncErrors.isUnique}}
+            <div>
+              Provided email is already in use.
+            </div>
+          {{/if}}
+        </div>
+      {{/if}}
+      </div>
+        <div class="error_container">
+      {{# if showPasswordErrors }}
+        <div class="arrow-left"></div>
+        <div class="validation_result_comment">
+          {{#if password.errors.maxLength}}
+            <div>
+              Password must contain max 50 characters.
+            </div>
+          {{/if}}
+          {{#if password.errors.minLength}}
+            <div>
+              Password must contain min 8 characters.
+            </div>
+          {{/if}}
+          {{#if password.errors.matchPattern}}
+            <div>
+              Password can contain only letters, numbers and characters: !@#$%^&*
+            </div>
+          {{/if}}
+        </div>
+      {{/if}}
+        </div>
+      <div class="error_container">
+      {{#if showConfirmPasswordErrors}}
+        <div class="arrow-left"></div>
+        <div class="validation_result_comment">
+          <div>
+            Password fields does not match.
+          </div>
+        </div>
+      {{/if}}
+      </div>
+</div>
 
-  <button type="submit" class="btn btn-primary" disabled={{formInvalid}}>Register</button>
-</form>
+
+</div>
