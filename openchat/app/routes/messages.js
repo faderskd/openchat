@@ -33,9 +33,4 @@ export default Ember.Route.extend({
     });
   },
 
-  afterModel(model, transition) {
-    console.log('afterModel');
-    console.log(model);
-  }
-
 });
