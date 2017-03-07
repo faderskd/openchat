@@ -65,6 +65,7 @@ export default function () {
   });
 
   this.get('/messages');
+  this.post('/messages');
   this.get('/messages/:id');
 
   this.get('/conversations');

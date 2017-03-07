@@ -4,9 +4,6 @@ export default Ember.Route.extend({
   userData: Ember.inject.service(),
 
   model(params) {
-    console.log('model');
-    console.log(params);
-
     return Ember.RSVP.hash({
       conversations: this.get('store').findAll('conversation', {include: 'users,messages'}),
 
@@ -19,8 +16,6 @@ export default Ember.Route.extend({
       }).then((conversation) => {
         return conversation.get('users');
       }).then((users) => {
-        console.log('inside');
-        console.log(users);
         let interlocutor = null;
         users.forEach((user) => {
           if (user.data.username !== this.get('userData').username) {
