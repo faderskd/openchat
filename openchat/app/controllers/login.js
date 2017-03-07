@@ -12,6 +12,7 @@ export default Ember.Controller.extend({
         authentication.login(formData).then(function (data) {
           controller.get('store').push(data);
 
+          controller.get('userData').set('id', data.data.id);
           controller.get('userData').set('username', data.data.attributes.username);
           controller.get('userData').set('email', data.data.attributes.email);
           controller.get('userData').set('token', data.data.attributes.token);
