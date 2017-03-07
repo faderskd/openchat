@@ -6,17 +6,16 @@ export default Ember.Controller.extend({
   actions: {
     handleSentMessage(message) {
       let conversation = this.get('model').currentConversation;
-      let username = this.get('userData').username;
-
-      this.get('store').query('user', {filter:{username: username}}).then((user) => {
-        let newMessage = this.get('store').createRecord('message', {
-          content: message,
-          conversation: conversation,
-          sender: user,
-          sentAt: new Date()
-        });
-        newMessage.save();
+      let loggedInUserId = this.get('userData').id;
+      let user = this.get('store').peekRecord('user', loggedInUserId);
+      let newMessage = this.get('store').createRecord('message', {
+        content: message,
+        conversation: conversation,
+        sender: user,
+        sentAt: new Date()
       });
+
+      newMessage.save();
     }
   }
 });
