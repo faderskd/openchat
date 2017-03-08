@@ -14,7 +14,7 @@ export default Ember.Route.extend({
         });
         return userConversation;
       }),
-      currentUser: this.store.findRecord('user', this.get('userData').id),
+      currentUser: this.store.peekRecord('user', this.get('userData').id),
     });
   },
 });
