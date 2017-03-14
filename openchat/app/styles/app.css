@@ -2,35 +2,26 @@ body {
   background-color: #f4f0bb;
   color: #43291f;
 }
+@media screen and (max-width: 789px) {
+  .validation_results_container {
+    display:none;
+
+  }
+}
+@media screen and (min-width: 789px) {
+  .validation_result_text_on_mobile {
+    display:none;
+
+  }
+}
+.validation_result_text_on_mobile {
+  color: #da2c38;
+  margin-bottom: 18px;
+}
 .custom-container-style {
-  width: 1000px;
+  width: 90%;
   margin: 30px auto;
   padding: 0;
-}
-.top-logo {
-  background-color: #87c38f;
-  padding: 0;
-  height: 70px;
-  color: #fff;
-
-}
-.logo_text {
-  margin: 0;
-  padding-left:100px;
-}
-.logo_image{
-  /*background: url('/assets/openchat_logo.png') no-repeat left;*/
-  width: 700px;
-  height:70px;
-  padding-top:10px;
-  margin-left:20px;
-
-}
-.big_logo {
-  background: url('/assets/logo_big.png') no-repeat left;
-  width: 316px;
-  height:270px;
-  margin-right: 40px;
 }
 .register-here {
   margin: 5% auto;
@@ -55,11 +46,13 @@ body {
 .validation_results_container {
   float: left;
   margin-top: 60px;
+  padding-left:0;
+  padding-right:0;
 }
 .single_validation_result_container {
   height: 48px;
-  width: 300px;
   margin: 27px 0;
+  padding:0;
 }
 .validation_result_text {
   border: solid 1px #da2c38;
