@@ -1,12 +1,12 @@
 body {
-  background-color: #f4f0bb;
-  color: #43291f;
+  color: #ff7f11;
+  background-color: #111111 ;
 }
+
 @media screen and (max-width: 789px) {
   .validation_results_container {
     display:none;
-
-  }
+}
 }
 @media screen and (min-width: 789px) {
   .validation_result_text_on_mobile {
@@ -14,8 +14,18 @@ body {
 
   }
 }
+.logo_img {
+  margin-top:10%;
+  border-radius: 6px 6px 6px 6px;
+  -moz-border-radius: 6px 6px 6px 6px;
+  -webkit-border-radius: 6px 6px 6px 6px;
+  -webkit-box-shadow: 4px 4px 15px 3px rgba(0,0,0,0.62);
+  -moz-box-shadow: 4px 4px 15px 3px rgba(0,0,0,0.62);
+  box-shadow: 4px 4px 15px 3px rgba(0,0,0,0.62);
+
+}
 .validation_result_text_on_mobile {
-  color: #da2c38;
+  color: #ff1b1c;
   margin-bottom: 18px;
 }
 .custom-container-style {
@@ -27,20 +37,20 @@ body {
   margin: 5% auto;
 }
 .form-control {
-  border: 1px solid #226f54;
+  border: 1px solid #d28630;
   color: #43291f;
 }
 .custom-form-style {
   float: left;
 }
 .form-control:focus {
-  -webkit-box-shadow: 0  0 9px 0 rgba(34,111,84,0.76);
-  -moz-box-shadow: 0 0 9px 0 rgba(34,111,84,0.76);
-  box-shadow: 0 0 9px 0 rgba(34,111,84,0.76);
-  border: 1px solid #226f54;
+  -webkit-box-shadow: 0  0 9px 0 #beb7a4;
+  -moz-box-shadow: 0 0 9px 0 #beb7a4;
+  box-shadow: 0 0 9px 0 #beb7a4;
+  border: 1px solid #beb7a4;
 }
 .form-control::-moz-placeholder {
-  color: #87c38f;
+  color: #beb7a4;
   opacity: 1;
 }
 .validation_results_container {
@@ -55,11 +65,11 @@ body {
   padding:0;
 }
 .validation_result_text {
-  border: solid 1px #da2c38;
+  border: solid 1px #ff1b1c;
   border-radius: 4px;
   padding: 3%;
-  background-color: #da2c38;
-  color: #fff;
+  background-color: #ff1b1c;
+  color: #beb7a4;
   display: inline-block;
 
 }
@@ -68,25 +78,19 @@ body {
   height: 0;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
-  border-right: 10px solid #da2c38;
+  border-right: 10px solid #ff1b1c;
   display: inline-block;
   margin-right: 0;
   padding-right: 0;
 }
 button.custom-button-style {
-  background-color: #da2c38;
+  background-color: #ff1b1c;
   margin-top: 30px;
   width: 100%;
-  color: #fff;
+  color: #fffffc;
 }
 button.custom-button-style:hover{
-  color:#f4f0bb;
+  color:#fffffc;
 }
-/*footer {
-  bottom: 0;
-  height: 60px;
-  line-height: 60px;
-  position: absolute;
-  width: 100%;
-}*/
+
 
